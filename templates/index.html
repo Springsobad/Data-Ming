@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự Đoán Loại Nấm</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header style="background-color: #3498db; color: white; padding: 20px 0; text-align: center; font-size: 24px;">
+        <h1>Dự Đoán Loại Nấm</h1>
+        <p>Nhập các thông số để dự đoán loại nấm có thể ăn được hay độc hại.</p>
+    </header>
+
+    <div class="container">
+        <form action="/predict" method="POST">
+
+            <div class="form-group">
+                <label for="odor">Mùi Hương:</label>
+                <select name="odor" required>
+                    <option value="a" {% if odor == 'a' %}selected{% endif %}>Hạnh nhân</option>
+                    <option value="l" {% if odor == 'l' %}selected{% endif %}>Hồi</option>
+                    <option value="c" {% if odor == 'c' %}selected{% endif %}>Creosote</option>
+                    <option value="y" {% if odor == 'y' %}selected{% endif %}>Cá</option>
+                    <option value="f" {% if odor == 'f' %}selected{% endif %}>Thối</option>
+                    <option value="m" {% if odor == 'm' %}selected{% endif %}>Mốc</option>
+                    <option value="n" {% if odor == 'n' %}selected{% endif %}>Không có</option>
+                    <option value="p" {% if odor == 'p' %}selected{% endif %}>Hắc</option>
+                    <option value="s" {% if odor == 's' %}selected{% endif %}>Cay</option>
+                </select>
+            </div>
+
+            <!-- Các dropdowns khác -->
+            <div class="form-group">
+                <label for="spore_print_color">Màu sắc bào tử:</label>
+                <select name="spore_print_color" required>
+                    <option value="k" {% if spore_print_color == 'k' %}selected{% endif %}>Đen</option>
+                    <option value="n" {% if spore_print_color == 'n' %}selected{% endif %}>Nâu</option>
+                    <option value="b" {% if spore_print_color == 'b' %}selected{% endif %}>Vàng nhạt</option>
+                    <option value="h" {% if spore_print_color == 'h' %}selected{% endif %}>Sô cô la</option>
+                    <option value="r" {% if spore_print_color == 'r' %}selected{% endif %}>Xanh lá</option>
+                    <option value="o" {% if spore_print_color == 'o' %}selected{% endif %}>Cam</option>
+                    <option value="u" {% if spore_print_color == 'u' %}selected{% endif %}>Tím</option>
+                    <option value="w" {% if spore_print_color == 'w' %}selected{% endif %}>Trắng</option>
+                    <option value="y" {% if spore_print_color == 'y' %}selected{% endif %}>Vàng</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="gill_color">Màu Sắc Phiến Nấm:</label>
+                <select name="gill_color" required>
+                    <option value="k" {% if gill_color == 'k' %}selected{% endif %}>Đen</option>
+                    <option value="n" {% if gill_color == 'n' %}selected{% endif %}>Nâu</option>
+                    <option value="b" {% if gill_color == 'b' %}selected{% endif %}>Vàng nhạt</option>
+                    <option value="h" {% if gill_color == 'h' %}selected{% endif %}>Sô cô la</option>
+                    <option value="g" {% if gill_color == 'g' %}selected{% endif %}>Xám</option>
+                    <option value="r" {% if gill_color == 'r' %}selected{% endif %}>Xanh lá</option>
+                    <option value="o" {% if gill_color == 'o' %}selected{% endif %}>Cam</option>
+                    <option value="p" {% if gill_color == 'p' %}selected{% endif %}>Hồng</option>
+                    <option value="u" {% if gill_color == 'u' %}selected{% endif %}>Tím</option>
+                    <option value="e" {% if gill_color == 'e' %}selected{% endif %}>Đỏ</option>
+                    <option value="w" {% if gill_color == 'w' %}selected{% endif %}>Trắng</option>
+                    <option value="y" {% if gill_color == 'y' %}selected{% endif %}>Vàng</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="stalk_surface_above_ring">Bề Mặt Cuống Nấm Trên Vòng:</label>
+                <select name="stalk_surface_above_ring" required>
+                    <option value="f" {% if stalk_surface_above_ring == 'f' %}selected{% endif %}>Sợi</option>
+                    <option value="y" {% if stalk_surface_above_ring == 'y' %}selected{% endif %}>Vảy</option>
+                    <option value="k" {% if stalk_surface_above_ring == 'k' %}selected{% endif %}>Mượt</option>
+                    <option value="s" {% if stalk_surface_above_ring == 's' %}selected{% endif %}>Mịn</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="stalk_surface_below_ring">Bề Mặt Cuống Nấm Dưới Vòng:</label>
+                <select name="stalk_surface_below_ring" required>
+                    <option value="f" {% if stalk_surface_below_ring == 'f' %}selected{% endif %}>Sợi</option>
+                    <option value="y" {% if stalk_surface_below_ring == 'y' %}selected{% endif %}>Vảy</option>
+                    <option value="k" {% if stalk_surface_below_ring == 'k' %}selected{% endif %}>Mượt</option>
+                    <option value="s" {% if stalk_surface_below_ring == 's' %}selected{% endif %}>Mịn</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ring_type">Loại Vòng:</label>
+                <select name="ring_type" required>
+                    <option value="e" {% if ring_type == 'e' %}selected{% endif %}>Tạm thời</option>
+                    <option value="f" {% if ring_type == 'f' %}selected{% endif %}>Mở rộng</option>
+                    <option value="l" {% if ring_type == 'l' %}selected{% endif %}>Lớn</option>
+                    <option value="n" {% if ring_type == 'n' %}selected{% endif %}>Không có</option>
+                    <option value="p" {% if ring_type == 'p' %}selected{% endif %}>Móc</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Dự Đoán</button>
+            </div>
+        </form>
+
+        {% if result %}
+        <div class="result-container">
+            <div class="result-info">
+                <h3>Thông Tin Bạn Đã Chọn:</h3>
+                <ul>
+                    <li><strong>Mùi hương:</strong> {{ odor_label }}</li>
+                    <li><strong>Màu sắc bào tử:</strong> {{ spore_print_color_label }}</li>
+                    <li><strong>Màu sắc phiến nấm:</strong> {{ gill_color_label }}</li>
+                    <li><strong>Cuống trên vòng:</strong> {{ stalk_surface_above_ring_label }}</li>
+                    <li><strong>Cuống dưới vòng:</strong> {{ stalk_surface_below_ring_label }}</li>
+                    <li><strong>Loại vòng:</strong> {{ ring_type_label }}</li>
+                </ul>
+            </div>
+
+            <div class="result">
+                <h2>{{ result }}</h2>
+                <img src="{{ url_for('static', filename='images/' + image) }}" alt="Mushroom Image">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer Section -->
+    <footer style="background-color: #2c3e50; color: white; text-align: center; padding: 10px;">
+        <p>&copy; 2025 Dự Đoán Loại Nấm. Tất cả quyền được bảo vệ.</p>
+    </footer>
+
+</body>
+</html>
